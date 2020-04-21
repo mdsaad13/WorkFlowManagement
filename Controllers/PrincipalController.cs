@@ -20,6 +20,11 @@ namespace WorkFlowManagement.Controllers
             return View();
         }
 
+        public ActionResult Departments()
+        {
+            return View();
+        }
+
         public ActionResult HOD()
         {
             return View();

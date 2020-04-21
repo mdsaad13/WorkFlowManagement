@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        @ViewBag.Title - @AppInfo.SoftwareName
+        Login - @AppInfo.SoftwareName
     </title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
@@ -73,19 +73,19 @@
                                 <div class="nav-tabs-wrapper">
                                     <ul class="nav nav-tabs justify-content-center" data-tabs="tabs">
                                         <li class="nav-item">
-                                            <a class="nav-link active" href="#Principal" data-toggle="tab">
+                                            <a class="nav-link @ViewBag.PrincipalActive" href="#Principal" data-toggle="tab">
                                                 Principal
                                                 <div class="ripple-container"></div>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#HOD" data-toggle="tab">
+                                        <li class="nav-item ">
+                                            <a class="nav-link @ViewBag.HODActive" href="#HOD" data-toggle="tab">
                                                 HOD
                                                 <div class="ripple-container"></div>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#Teacher" data-toggle="tab">
+                                        <li class="nav-item ">
+                                            <a class="nav-link @ViewBag.TeacherActive" href="#Teacher" data-toggle="tab">
                                                 Faculty
                                                 <div class="ripple-container"></div>
                                             </a>
@@ -96,17 +96,22 @@
                         </div>
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="tab-pane active" id="Principal">
-                                    @using (Html.BeginForm(new { @class = "p-4" }))
-                                    {
-                                        @Html.HiddenFor(model => model.WhichLogin, new { @value = 1 })
+                                <div class="tab-pane @ViewBag.PrincipalActive" id="Principal">
+                                    <form method="post" class="p-4">
+                                        <input id="WhichLogin" name="WhichLogin" type="hidden" value="1">
                                         @Html.AntiForgeryToken()
                                         <p class="card-description text-center">Login to access Principal Dashboard</p>
+                                        @if (ViewBag.PrincipalError != null)
+                                        {
+                                            <div class="alert alert-danger" role="alert">
+                                                Invalid username or password
+                                            </div>
+                                        }
+
                                         <div class="form-group bmd-form-group">
-                                            <label for="exampleEmail" class="bmd-label-floating">Email Address</label>
-                                            <input type="email" class="form-control" id="exampleEmail">
-                                            @Html.EditorFor(model => model.PrincipalCreds.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.Email, "", new { @class = "error" })
+                                            <label for="exampleEmail" class="bmd-label-floating">UserName</label>
+                                            @Html.EditorFor(model => model.PrincipalCreds.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.UserName, "", new { @class = "error" })
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
@@ -116,51 +121,59 @@
                                         <div class="mt-4">
                                             <button class="btn btn-block btn-primary">Submit</button>
                                         </div>
-                                    }
+                                    </form>
                                 </div>
-                                <div class="tab-pane" id="HOD">
-                                    @using (Html.BeginForm(new { @class = "p-4" }))
-                                    {
-                                        @Html.HiddenFor(model => model.WhichLogin, new { @value = 2 })
+                                <div class="tab-pane @ViewBag.HODActive" id="HOD">
+                                    <form method="post" class="p-4">
+                                        <input id="WhichLogin" name="WhichLogin" type="hidden" value="2">
                                         @Html.AntiForgeryToken()
                                         <p class="card-description text-center">Login to access HOD Dashboard</p>
+                                        @if (ViewBag.HODError != null)
+                                        {
+                                            <div class="alert alert-danger" role="alert">
+                                                Invalid username or password
+                                            </div>
+                                        }
                                         <div class="form-group bmd-form-group">
-                                            <label for="exampleEmail" class="bmd-label-floating">Email Address</label>
-                                            <input type="email" class="form-control" id="exampleEmail">
-                                            @Html.EditorFor(model => model.PrincipalCreds.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.Email, "", new { @class = "error" })
+                                            <label for="exampleEmail" class="bmd-label-floating">UserName</label>
+                                            @Html.EditorFor(model => model.HodCreds.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.HodCreds.UserName, "", new { @class = "error" })
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.PasswordFor(model => model.PrincipalCreds.Password, new { @class = "form-control form-control-user" })
-                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.Password, "", new { @class = "error" })
+                                            @Html.PasswordFor(model => model.HodCreds.Password, new { @class = "form-control form-control-user" })
+                                            @Html.ValidationMessageFor(model => model.HodCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">
                                             <button class="btn btn-block btn-primary">Submit</button>
                                         </div>
-                                    }
+                                    </form>
                                 </div>
-                                <div class="tab-pane" id="Teacher">
-                                    @using (Html.BeginForm(new { @class = "p-4" }))
-                                    {
-                                        @Html.HiddenFor(model => model.WhichLogin, new { @value = 3 })
+                                <div class="tab-pane @ViewBag.TeacherActive" id="Teacher">
+                                    <form method="post" class="p-4">
+                                        <input id="WhichLogin" name="WhichLogin" type="hidden" value="3">
                                         @Html.AntiForgeryToken()
-                                        <p class="card-description text-center">Login to access Teacher Dashboard</p>
+                                        <p class="card-description text-center">Login to access Faculty Dashboard</p>
+                                        @if (ViewBag.TeacherError != null)
+                                        {
+                                            <div class="alert alert-danger" role="alert">
+                                                Invalid username or password
+                                            </div>
+                                        }
                                         <div class="form-group bmd-form-group">
-                                            <label for="exampleEmail" class="bmd-label-floating">Email Address</label>
-                                            <input type="email" class="form-control" id="exampleEmail">
-                                            @Html.EditorFor(model => model.PrincipalCreds.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.Email, "", new { @class = "error" })
+                                            <label for="exampleEmail" class="bmd-label-floating">UserName</label>
+                                            @Html.EditorFor(model => model.FacultyCreds.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.FacultyCreds.UserName, "", new { @class = "error" })
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.PasswordFor(model => model.PrincipalCreds.Password, new { @class = "form-control form-control-user" })
-                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.Password, "", new { @class = "error" })
+                                            @Html.PasswordFor(model => model.FacultyCreds.Password, new { @class = "form-control form-control-user" })
+                                            @Html.ValidationMessageFor(model => model.FacultyCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">
                                             <button class="btn btn-block btn-primary">Submit</button>
                                         </div>
-                                    }
+                                    </form>
                                 </div>
                             </div>
                         </div>

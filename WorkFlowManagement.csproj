@@ -190,11 +190,11 @@
     <Content Include="Views\Shared\_HodNav.cshtml" />
     <Content Include="Views\Shared\_FacultyNav.cshtml" />
     <Content Include="Views\Principal\Index.cshtml" />
+    <Content Include="Views\Hod\Index.cshtml" />
+    <Content Include="Views\Faculty\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Faculty\" />
-    <Folder Include="Views\Hod\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
