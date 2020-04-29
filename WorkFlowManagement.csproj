@@ -219,6 +219,19 @@
     <Content Include="Views\Principal\AddNoticeBoards.cshtml" />
     <Content Include="Views\Hod\NoticeBoards.cshtml" />
     <Content Include="Views\Hod\AddNoticeBoards.cshtml" />
+    <Content Include="Views\Hod\AddFaculty.cshtml" />
+    <Content Include="Views\Hod\Faculty.cshtml" />
+    <Content Include="Views\Hod\EditFaculty.cshtml" />
+    <Content Include="Views\Hod\Partials\_FacultyForm.cshtml" />
+    <Content Include="Views\Hod\Meetings.cshtml" />
+    <Content Include="Views\Hod\AddMeetings.cshtml" />
+    <Content Include="Views\Hod\Leaves.cshtml" />
+    <Content Include="Views\Hod\AskLeaves.cshtml" />
+    <Content Include="Views\Faculty\NoticeBoards.cshtml" />
+    <Content Include="Views\Faculty\AddNoticeBoards.cshtml" />
+    <Content Include="Views\Faculty\Meetings.cshtml" />
+    <Content Include="Views\Faculty\Leaves.cshtml" />
+    <Content Include="Views\Faculty\AskLeaves.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

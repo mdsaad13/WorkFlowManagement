@@ -12,7 +12,7 @@
                     <p class="card-category">Enter Details</p>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("EditFaculty", "Principal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("EditFaculty", "Hod", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
 

@@ -9,7 +9,7 @@
             <div class="card-header card-header-primary">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <h4 class="card-title ">@ViewBag.Title</h4>
+                        <h4 class="card-title ">@ViewBag.Title - @ViewBag.MyDepartmentName Department</h4>
                     </div>
                     <div class="col-6">
                         <a href="@Url.Action("AddFaculty")" class="btn btn-info pull-right">Add Faculty</a>
@@ -25,7 +25,7 @@
                                     #
                                 </th>
                                 <th>
-                                   Image
+                                    Image
                                 </th>
                                 <th>
                                     Faculty ID
@@ -38,9 +38,6 @@
                                 </th>
                                 <th>
                                     Mobile
-                                </th>
-                                <th>
-                                    Department
                                 </th>
                                 <th>
                                     Subject
@@ -70,9 +67,6 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Mobile)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DeptName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Subject)

@@ -23,6 +23,7 @@ namespace WorkFlowManagement.DAL
                 {
                     Top5 = "TOP 5";
                 }
+                
                 string sqlquery = $"SELECT {Top5} * FROM noticeboard ORDER BY datetime DESC";
                 SqlCommand cmd = new SqlCommand(sqlquery, Conn);
                 SqlDataAdapter adp = new SqlDataAdapter(cmd);
@@ -100,7 +101,7 @@ namespace WorkFlowManagement.DAL
         }
 
         /* Meetings operations starts here */
-        internal List<Meetings> Meetings(bool All = false)
+        internal List<Meetings> Meetings(bool All = false, int DeptID = 0)
         {
             DataTable td = new DataTable();
             List<Meetings> list = new List<Meetings>();
@@ -108,11 +109,16 @@ namespace WorkFlowManagement.DAL
             try
             {
                 string Top5 = string.Empty;
+                string DeptCondition = string.Empty;
                 if (!All)
                 {
                     Top5 = "TOP 5";
                 }
-                string sqlquery = $"SELECT {Top5} * FROM meetings ORDER BY date DESC";
+                if (DeptID > 0)
+                {
+                    DeptCondition = "WHERE deptid = "+ DeptID;
+                }
+                string sqlquery = $"SELECT {Top5} * FROM meetings {DeptCondition} ORDER BY date DESC";
                 SqlCommand cmd = new SqlCommand(sqlquery, Conn);
                 SqlDataAdapter adp = new SqlDataAdapter(cmd);
                 Conn.Open();
@@ -193,5 +199,115 @@ namespace WorkFlowManagement.DAL
                 Conn.Close();
             }
         }
+        /* Meetings operations ends here */
+
+        /* Leaves operations starts here */
+
+        /// <summary>
+        /// param AskedBy = 1 HOD <br></br>
+        /// param AskedBy = 2 Faculty <br></br>
+        /// param AskedBy = 3 View All <br></br>
+        /// </summary>
+        internal List<Leaves> Leaves(int AskedBy, int ID = 0)
+        {
+            DataTable td = new DataTable();
+            List<Leaves> list = new List<Leaves>();
+
+            try
+            {
+                string sqlquery = string.Empty;
+                if (AskedBy == 1) // HOD
+                {
+                    sqlquery = $"SELECT * FROM leaves WHERE hodid = {ID} ORDER BY leaveid DESC";
+                }
+                else if (AskedBy == 2) // Faculty
+                {
+                    sqlquery = $"SELECT * FROM leaves WHERE facultyid = {ID} ORDER BY leaveid DESC";
+                }
+                else if (AskedBy == 3) // All
+                {
+                    sqlquery = $"SELECT * FROM leaves ORDER BY leaveid DESC";
+                }
+                
+                SqlCommand cmd = new SqlCommand(sqlquery, Conn);
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                Conn.Open();
+                adp.Fill(td);
+                Conn.Close();
+                foreach (DataRow row in td.Rows)
+                {
+                    Leaves obj = new Leaves
+                    {
+                        ID = Convert.ToInt32(row["leaveid"]),
+                        FromDate = Convert.ToDateTime(row["fromdate"]),
+                        ToDate = Convert.ToDateTime(row["todate"]),
+                        Reason = Convert.ToString(row["reason"]),
+                        AskedBy = Convert.ToInt32(row["askedby"]),
+                        HodID = Convert.ToInt32(row["hodid"]),
+                        FacultyID = Convert.ToInt32(row["facultyid"]),
+                        Status = Convert.ToInt32(row["status"])
+                    };
+
+                    list.Add(obj);
+                }
+            }
+            catch (Exception)
+            { }
+            return list;
+        }
+
+        internal bool AddLeave(Leaves model)
+        {
+            bool result = false;
+            try
+            {
+                string query = "INSERT INTO leaves (fromdate, todate, reason, askedby, hodid, facultyid, status) VALUES(@fromdate, @todate, @reason, @askedby, @hodid, @facultyid, @status)";
+                SqlCommand cmd = new SqlCommand(query, Conn);
+
+                cmd.Parameters.Add(new SqlParameter("fromdate", model.FromDate));
+                cmd.Parameters.Add(new SqlParameter("todate", model.ToDate));
+                cmd.Parameters.Add(new SqlParameter("reason", model.Reason));
+                cmd.Parameters.Add(new SqlParameter("askedby", model.AskedBy));
+                cmd.Parameters.Add(new SqlParameter("hodid", model.HodID));
+                cmd.Parameters.Add(new SqlParameter("facultyid", model.FacultyID));
+                cmd.Parameters.Add(new SqlParameter("status", model.Status));
+
+                Conn.Open();
+
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception exp)
+            {
+
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
+
+        internal void DeleteLeave(int ID)
+        {
+            try
+            {
+                string query = "DELETE from leaves where leaveid = @leaveid";
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("leaveid", ID));
+                Conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            { }
+            finally
+            {
+                Conn.Close();
+            }
+        }
+        /* Leaves operations ends here */
     }
 }

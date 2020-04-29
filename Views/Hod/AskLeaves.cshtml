@@ -1,0 +1,94 @@
+﻿@model WorkFlowManagement.Models.Leaves
+    @{
+        ViewBag.Title = "Leaves";
+        ViewBag.LeavesActive = "active";
+    }
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <div class="row">
+        <div class="col-12">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">@ViewBag.Title</h4>
+                        <p class="card-category">Enter Details</p>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group bmd-form-group">
+                                        @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "bmd-label-floating" })
+                                        @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "error" })
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group bmd-form-group">
+                                        @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "bmd-label-floating" })
+                                        @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "error" })
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "bmd-label-static" })
+                                        @Html.TextAreaFor(model => model.Reason, new { @class = "form-control", @rows = "3" })
+                                        @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "error" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary pull-right">Ask Leave</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section scripts{
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+        <script>
+            // Date functions
+            $(function () {
+                var CurrentDate = new Date();
+
+                var PlusOneWeek = new Date();
+                PlusOneWeek.setDate(CurrentDate.getDate() + 7);
+
+                var PlusTwoWeek = new Date();
+                PlusTwoWeek.setDate(CurrentDate.getDate() + 30);
+
+                $('input[name="FromDate"]').daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    minDate: PlusOneWeek,
+                    maxDate: PlusTwoWeek,
+                    opens: 'right',
+                    drops: 'up',
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    }
+                });
+
+                $('input[name="ToDate"]').daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    minDate: PlusOneWeek,
+                    maxDate: PlusTwoWeek,
+                    opens: 'right',
+                    drops: 'up',
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    }
+                });
+
+            });
+        </script>
+    }

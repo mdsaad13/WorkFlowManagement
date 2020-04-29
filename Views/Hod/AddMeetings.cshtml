@@ -20,12 +20,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">
-                                    @Html.DropDownListFor(model => model.DeptID, ViewBag.DepartmentList as SelectList, "Select Department", new { @class = "custom-select" })
-                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "error" })
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group bmd-form-group">
                                     @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "bmd-label-floating" })
                                     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "error" })
@@ -41,7 +35,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "bmd-label-static" })
-                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows="3" } )
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "3" })
                                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error" })
                                 </div>
                             </div>

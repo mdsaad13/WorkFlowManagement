@@ -346,13 +346,18 @@ namespace WorkFlowManagement.DAL
             return result;
         }
 
-        internal List<Faculty> AllFaculty()
+        internal List<Faculty> AllFaculty(int DeptID = 0)
         {
             DataTable td = new DataTable();
             List<Faculty> list = new List<Faculty>();
             try
             {
-                string sqlquery = "SELECT * FROM faculty ORDER BY facultyid DESC";
+                string DeptCondition = string.Empty;
+                if (DeptID > 0)
+                {
+                    DeptCondition = "WHERE deptid = " + DeptID;
+                }
+                string sqlquery = $"SELECT * FROM faculty {DeptCondition} ORDER BY facultyid DESC";
                 SqlCommand cmd = new SqlCommand(sqlquery, Conn);
                 SqlDataAdapter adp = new SqlDataAdapter(cmd);
                 Conn.Open();

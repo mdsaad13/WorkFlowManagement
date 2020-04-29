@@ -1,8 +1,9 @@
-﻿@model IEnumerable<WorkFlowManagement.Models.Faculty>
+﻿@model IEnumerable<WorkFlowManagement.Models.Leaves>
 @{
-    ViewBag.Title = "Faculty";
-    ViewBag.FacultyActive = "active";
+    ViewBag.Title = "Leaves";
+    ViewBag.LeavesActive = "active";
 }
+
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -12,7 +13,7 @@
                         <h4 class="card-title ">@ViewBag.Title</h4>
                     </div>
                     <div class="col-6">
-                        <a href="@Url.Action("AddFaculty")" class="btn btn-info pull-right">Add Faculty</a>
+                        <a href="@Url.Action("AskLeaves")" class="btn btn-info pull-right">Apply for leave</a>
                     </div>
                 </div>
             </div>
@@ -25,25 +26,16 @@
                                     #
                                 </th>
                                 <th>
-                                   Image
+                                    From Date
                                 </th>
                                 <th>
-                                    Faculty ID
+                                    To Date
                                 </th>
                                 <th>
-                                    Name
+                                    Reason
                                 </th>
                                 <th>
-                                    Email
-                                </th>
-                                <th>
-                                    Mobile
-                                </th>
-                                <th>
-                                    Department
-                                </th>
-                                <th>
-                                    Subject
+                                    Status
                                 </th>
                                 <th>
                                     Action
@@ -57,30 +49,36 @@
                                 <tr>
                                     <th scope="row">@i</th>
                                     <td>
-                                        <img src="@Html.DisplayFor(modelItem => item.ImgUrl)" height="50" />
+                                        @item.FromDate.ToLongDateString()
                                     </td>
                                     <td>
-                                        F-@Html.DisplayFor(modelItem => item.ID)
+                                        @item.ToDate.ToLongDateString()
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
+                                        @item.Reason
                                     </td>
+                                    @if (item.Status == 0)
+                                    {
+                                        <td class="text-warning">
+                                            Approval Pending!
+                                        </td>
+                                    }
+                                    else if (item.Status == 1)
+                                    {
+                                        <td class="text-success">
+                                            Approved!
+                                        </td>
+                                    }
+                                    else if (item.Status == 2)
+                                    {
+                                        <td class="text-danger">
+                                            Declined!
+                                        </td>
+                                    }
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Mobile)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DeptName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Subject)
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-outline-primary btn-sm btn-round" href="@Url.Action("EditFaculty", new { id = item.ID })">
-                                            <i class="material-icons">create</i> Edit
-                                        </a>
+                                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="DeleteMeeting(@item.ID)">
+                                            <i class="material-icons">delete</i>
+                                        </button>
                                     </td>
                                 </tr>
                                 i++;
@@ -98,6 +96,13 @@
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
+
+        function DeleteMeeting(id) {
+            if (confirm('Are you sure you want to delete this leave?')) {
+                window.location.replace("/Hod/DeleteLeaves/"+id);
+            }
+        }
+
     </script>
     @{
         int Notification = 0;
@@ -111,10 +116,11 @@
         }
         catch
         { }
+
         if (Notification == 1)
         {
             <script>
-                SuccessAlert('Faculty added successfully');
+                SuccessAlert('Leave added successfully! Kindly wait for approval');
             </script>
             Session["Notification"] = null;
         }
@@ -125,10 +131,10 @@
             </script>
             Session["Notification"] = null;
         }
-        else if (Notification == 3)
+        if (Notification == 3)
         {
             <script>
-                SuccessAlert('Faculty updated successfully');
+                SuccessAlert('Leave deleted successfully');
             </script>
             Session["Notification"] = null;
         }

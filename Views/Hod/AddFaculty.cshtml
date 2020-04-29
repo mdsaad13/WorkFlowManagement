@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Edit Faculty";
+    ViewBag.Title = "Add Faculty";
     ViewBag.FacultyActive = "active";
+    ViewBag.ShowPassField = true;
 }
 
 <div class="row">
@@ -12,14 +13,14 @@
                     <p class="card-category">Enter Details</p>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm("EditFaculty", "Principal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("AddFaculty", "Hod", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
 
                         Html.RenderPartial("Partials/_FacultyForm");
 
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-primary pull-right">Update Faculty</button>
+                            <button type="submit" class="btn btn-primary pull-right">Add Faculty</button>
                             <div class="clearfix"></div>
                         </div>
                     }

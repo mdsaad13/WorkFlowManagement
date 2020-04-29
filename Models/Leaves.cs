@@ -13,7 +13,7 @@ namespace WorkFlowManagement.Models
         /// <summary>
         /// 1 - HOD, 2 - Faculty
         /// </summary>
-        public string AskedBy { get; set; }
+        public int AskedBy { get; set; }
         public int HodID { get; set; }
         public int FacultyID { get; set; }
 

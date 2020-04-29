@@ -1,1 +1,32 @@
-﻿
+﻿<ul class="nav">
+    <li class="nav-item @ViewBag.DashboardActive">
+        <a class="nav-link" href="@Url.Action("Index", "Faculty")">
+            <i class="material-icons">dashboard</i>
+            <p>Dashboard</p>
+        </a>
+    </li>
+    <li class="nav-item @ViewBag.NoticeActive">
+        <a class="nav-link" href="@Url.Action("NoticeBoards", "Faculty")">
+            <i class="material-icons">event</i>
+            <p>Notice Boards</p>
+        </a>
+    </li>
+    <li class="nav-item @ViewBag.MeetingsActive">
+        <a class="nav-link" href="@Url.Action("Meetings", "Faculty")">
+            <i class="material-icons">date_range</i>
+            <p>Meetings</p>
+        </a>
+    </li>
+    <li class="nav-item @ViewBag.LeavesActive">
+        <a class="nav-link" href="@Url.Action("Leaves", "Faculty")">
+            <i class="material-icons">exit_to_app</i>
+            <p>Leaves</p>
+        </a>
+    </li>
+    <li class="nav-item @ViewBag.QuestionPapersActive">
+        <a class="nav-link" href="@Url.Action("QuestionPapers", "Faculty")">
+            <i class="material-icons">content_paste</i>
+            <p>Question Papers</p>
+        </a>
+    </li>
+</ul>
