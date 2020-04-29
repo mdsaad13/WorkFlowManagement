@@ -1,0 +1,144 @@
+﻿@model IEnumerable<WorkFlowManagement.Models.Faculty>
+@{
+    ViewBag.Title = "Faculty";
+    ViewBag.FacultyActive = "active";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h4 class="card-title ">@ViewBag.Title</h4>
+                    </div>
+                    <div class="col-6">
+                        <a href="@Url.Action("AddFaculty")" class="btn btn-info pull-right">Add Faculty</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="myTable">
+                        <thead class="text-primary">
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                   Image
+                                </th>
+                                <th>
+                                    Faculty ID
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Mobile
+                                </th>
+                                <th>
+                                    Department
+                                </th>
+                                <th>
+                                    Subject
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int i = 1; }
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>
+                                        <img src="@Html.DisplayFor(modelItem => item.ImgUrl)" height="50" />
+                                    </td>
+                                    <td>
+                                        F-@Html.DisplayFor(modelItem => item.ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mobile)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DeptName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Subject)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-primary btn-sm btn-round" href="@Url.Action("EditFaculty", new { id = item.ID })">
+                                            <i class="material-icons">create</i> Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+    @{
+        int Notification = 0;
+        try
+        {
+            /*
+             * try block to check if Session["Notification"] exist
+             * if exist then convert  string to int
+             */
+            Notification = Convert.ToInt32(Session["Notification"]);
+        }
+        catch
+        { }
+        if (Notification == 1)
+        {
+            <script>
+                SuccessAlert('Faculty added successfully');
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 2)
+        {
+            <script>
+                ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 3)
+        {
+            <script>
+                SuccessAlert('Faculty updated successfully');
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 4)
+        {
+            <script>
+                ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+    }
+}
+

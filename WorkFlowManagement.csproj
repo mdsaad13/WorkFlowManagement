@@ -126,13 +126,20 @@
     <Compile Include="Controllers\HodController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PrincipalController.cs" />
+    <Compile Include="DAL\Common.cs" />
+    <Compile Include="DAL\GeneralUtil.cs" />
     <Compile Include="DAL\LoginUtil.cs" />
+    <Compile Include="DAL\PrinciUtil.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Departments.cs" />
     <Compile Include="Models\Faculty.cs" />
     <Compile Include="Models\Hod.cs" />
+    <Compile Include="Models\Leaves.cs" />
     <Compile Include="Models\LoginBundle.cs" />
+    <Compile Include="Models\Meetings.cs" />
+    <Compile Include="Models\NoticeBoard.cs" />
     <Compile Include="Models\Principal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -192,9 +199,30 @@
     <Content Include="Views\Principal\Index.cshtml" />
     <Content Include="Views\Hod\Index.cshtml" />
     <Content Include="Views\Faculty\Index.cshtml" />
+    <Content Include="Views\Principal\Departments.cshtml" />
+    <Content Include="Views\Principal\AddDepartments.cshtml" />
+    <Content Include="Views\Principal\Partials\_DeptForm.cshtml" />
+    <Content Include="Views\Principal\EditDepartments.cshtml" />
+    <Content Include="Views\Principal\HOD.cshtml" />
+    <Content Include="Views\Principal\AddHOD.cshtml" />
+    <Content Include="Views\Principal\EditHOD.cshtml" />
+    <Content Include="Views\Principal\Faculty.cshtml" />
+    <Content Include="Views\Principal\AddFaculty.cshtml" />
+    <Content Include="Views\Principal\EditFaculty.cshtml" />
+    <Content Include="Views\Principal\Partials\_HodForm.cshtml" />
+    <Content Include="Views\Principal\Partials\_FacultyForm.cshtml" />
+    <Content Include="Views\Principal\Meetings.cshtml" />
+    <Content Include="Views\Principal\AddMeetings.cshtml" />
+    <Content Include="Views\Principal\NoticeBoards.cshtml" />
+    <Content Include="Views\Principal\QuestionPapers.cshtml" />
+    <Content Include="Views\Principal\Leaves.cshtml" />
+    <Content Include="Views\Principal\AddNoticeBoards.cshtml" />
+    <Content Include="Views\Hod\NoticeBoards.cshtml" />
+    <Content Include="Views\Hod\AddNoticeBoards.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

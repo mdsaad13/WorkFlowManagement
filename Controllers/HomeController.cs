@@ -14,8 +14,26 @@ namespace WorkFlowManagement.Controllers
         public ActionResult Index()
         {
             ViewBag.PrincipalActive = "active";
+
+            LoginBundle loginBundle = new LoginBundle();
+
+            Principal PrincipalCreds = new Principal();
+            PrincipalCreds.Email = "admin@mail.com";
+            PrincipalCreds.Password = "Admin123";
+            loginBundle.PrincipalCreds = PrincipalCreds;
+            
+            Hod hod = new Hod();
+            hod.Email = "hod@mail.com";
+            hod.Password = "Hod123";
+            loginBundle.HodCreds = hod;
+
+            Faculty faculty = new Faculty();
+            faculty.Email = "saad.13.personal@gmail.com";
+            faculty.Password = "sAAD123";
+            loginBundle.FacultyCreds = faculty;
+
             // This is login page
-            return View();
+            return View(loginBundle);
         }
 
         [IsAuthorized]
@@ -31,7 +49,7 @@ namespace WorkFlowManagement.Controllers
             if (Creds.WhichLogin == 1)
             {
                 // Principal creds
-                UserName = Creds.PrincipalCreds.UserName;
+                UserName = Creds.PrincipalCreds.Email;
                 Password = Creds.PrincipalCreds.Password;
                 Table = "principal";
                 Redirect = "Principal";
@@ -41,7 +59,7 @@ namespace WorkFlowManagement.Controllers
             else if (Creds.WhichLogin == 2)
             {
                 // Hod creds
-                UserName = Creds.HodCreds.UserName;
+                UserName = Creds.HodCreds.Email;
                 Password = Creds.HodCreds.Password;
                 Table = "hod";
                 Redirect = "Hod";
@@ -51,7 +69,7 @@ namespace WorkFlowManagement.Controllers
             else if (Creds.WhichLogin == 3)
             {
                 // Faculty creds
-                UserName = Creds.FacultyCreds.UserName;
+                UserName = Creds.FacultyCreds.Email;
                 Password = Creds.FacultyCreds.Password;
                 Table = "faculty";
                 Redirect = "Faculty";
@@ -69,6 +87,13 @@ namespace WorkFlowManagement.Controllers
                 return View();
             }
             
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            Session.Clear();
+            return RedirectToAction("Index");
         }
     }
 }

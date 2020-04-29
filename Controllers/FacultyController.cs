@@ -11,6 +11,7 @@ namespace WorkFlowManagement.Controllers
         public FacultyController()
         {
             ViewBag.WhichSideNav = "_FacultyNav";
+            ViewBag.WhichDashboard = "Faculty Dashboard";
         }
 
         // GET: Faculty

@@ -1,7 +1,154 @@
-﻿
+﻿@model WorkFlowManagement.Models.MeetingsAndNoticeBundle
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
+    ViewBag.DashboardActive = "active";
 }
 
-<h2>HOD</h2>
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">widgets</i>
+                </div>
+                <p class="card-category">Total Departments</p>
+                <h3 class="card-title">
+                    @ViewData["TotalDepartments"]
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons ">visibility</i>
+                    <a href="@Url.Action("Departments")">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">verified_user</i>
+                </div>
+                <p class="card-category">Total HOD's</p>
+                <h3 class="card-title">
+                    @ViewData["TotalHods"]
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons ">visibility</i>
+                    <a href="@Url.Action("HOD")">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">supervised_user_circle</i>
+                </div>
+                <p class="card-category">Total Faculties</p>
+                <h3 class="card-title">
+                    @ViewData["TotalFaculties"]
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons ">visibility</i>
+                    <a href="@Url.Action("Faculty")">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">date_range</i>
+                </div>
+                <p class="card-category">Total Meetings</p>
+                <h3 class="card-title">
+                    @ViewData["TotalMeetings"]
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons ">visibility</i>
+                    <a href="@Url.Action("Meetings")">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Notice Board
+                    <a href="@Url.Action("NoticeBoards", "Principal")" class="pull-right btn btn-sm btn-outline-primary">View All</a>
+                </h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var NoticeItem in Model.NoticeBoard)
+                        {
+                            <tr>
+                                <td>@NoticeItem.Date.ToLongDateString()</td>
+                                <td>@NoticeItem.Title</td>
+                                <td>@NoticeItem.Description</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Meetings
+                    <a href="@Url.Action("Meetings", "Principal")" class="pull-right btn btn-sm btn-outline-primary">View All</a>
+                </h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Department</th>
+                            <th>Title</th>
+                            <th>Place</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var MeetingsItem in Model.Meetings)
+                        {
+                            <tr>
+                                <td>@MeetingsItem.DateOfMeeting.ToLongDateString()</td>
+                                <td>@MeetingsItem.TimeOfMeeting</td>
+                                <td>@MeetingsItem.DeptName</td>
+                                <td>@MeetingsItem.Title</td>
+                                <td>@MeetingsItem.Place</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 

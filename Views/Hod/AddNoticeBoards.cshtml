@@ -1,0 +1,45 @@
+﻿@model WorkFlowManagement.Models.NoticeBoard
+@{
+    ViewBag.Title = "Add Notice Board";
+    ViewBag.NoticeActive = "active";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <p class="card-category">Enter Details</p>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group bmd-form-group">
+                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "error" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "bmd-label-static" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = "3" })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary pull-right">Add Notice</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

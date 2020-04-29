@@ -11,6 +11,8 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css" />
     <!-- CSS Files -->
     @Styles.Render("~/css")
 </head>
@@ -21,8 +23,9 @@
 
             <div class="logo">
                 <a class="simple-text logo-normal">
-                    @AppInfo.SoftwareName
-                </a>
+                    @AppInfo.SoftwareName <br />
+                    @ViewBag.WhichDashboard
+                </a>                
             </div>
             <div class="sidebar-wrapper">
                 @{
@@ -79,6 +82,37 @@
     @Scripts.Render("~/script")
 
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+    <script>
+        function SuccessAlert(message) {
+            $.notify({
+                icon: "check_circle",
+                message: message
+            }, {
+                type: 'success',
+                timer: 3000,
+                placement: {
+                    from: 'top',
+                    align: 'center'
+                }
+            });
+        }
+
+        function ErrorAlert(message = 'An Unknown Error Occured.<br>Please try again later') {
+            $.notify({
+                icon: "error",
+                message: message
+            }, {
+                type: 'danger',
+                allow_dismiss: false,
+                placement: {
+                    from: 'top',
+                    align: 'center'
+                }
+            });
+        }
+    </script>
 
     @* Custom JS *@
     @RenderSection("scripts", required: false)

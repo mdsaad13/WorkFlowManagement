@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Add Departments";
+    ViewBag.DepartmentsActive = "active";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <p class="card-category">Enter Details</p>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        
+                        Html.RenderPartial("Partials/_DeptForm");
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary pull-right">Add Department</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

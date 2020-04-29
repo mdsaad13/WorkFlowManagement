@@ -1,41 +1,47 @@
 ﻿<ul class="nav">
-    <li class="nav-item active  ">
+    <li class="nav-item @ViewBag.DashboardActive">
         <a class="nav-link" href="@Url.Action("Index", "Principal")">
             <i class="material-icons">dashboard</i>
             <p>Dashboard</p>
         </a>
+    </li> 
+    <li class="nav-item @ViewBag.NoticeActive">
+        <a class="nav-link" href="@Url.Action("NoticeBoards", "Principal")">
+            <i class="material-icons">event</i>
+            <p>Notice Boards</p>
+        </a>
     </li>
-    <li class="nav-item ">
+    <li class="nav-item @ViewBag.DepartmentsActive">
         <a class="nav-link" href="@Url.Action("Departments", "Principal")">
-            <i class="material-icons">person</i>
+            <i class="material-icons">widgets</i>
             <p>Departments</p>
         </a>
     </li>
-    <li class="nav-item ">
+    <li class="nav-item @ViewBag.HODActive">
         <a class="nav-link" href="@Url.Action("HOD", "Principal")">
-            <i class="material-icons">person</i>
+            <i class="material-icons">verified_user</i>
             <p>HOD</p>
         </a>
     </li>
-    <li class="nav-item ">
+    <li class="nav-item @ViewBag.FacultyActive">
         <a class="nav-link" href="@Url.Action("Faculty", "Principal")">
-            <i class="material-icons">content_paste</i>
+            <i class="material-icons">supervised_user_circle</i>
             <p>Faculty</p>
         </a>
     </li>
-    <li class="nav-item ">
+    <li class="nav-item @ViewBag.MeetingsActive">
         <a class="nav-link" href="@Url.Action("Meetings", "Principal")">
-            <i class="material-icons">content_paste</i>
+            <i class="material-icons">date_range</i>
             <p>Meetings</p>
         </a>
     </li>
-    <li class="nav-item ">
+    <li class="nav-item @ViewBag.LeavesActive">
         <a class="nav-link" href="@Url.Action("Leaves", "Principal")">
-            <i class="material-icons">content_paste</i>
+            <i class="material-icons">exit_to_app</i>
             <p>Leaves</p>
         </a>
     </li>
-    <li class="nav-item ">
+    <li class="nav-item @ViewBag.QuestionPapersActive">
         <a class="nav-link" href="@Url.Action("QuestionPapers", "Principal")">
             <i class="material-icons">content_paste</i>
             <p>Question Papers</p>

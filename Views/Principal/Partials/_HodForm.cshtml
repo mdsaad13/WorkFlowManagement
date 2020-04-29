@@ -1,0 +1,88 @@
+﻿@model WorkFlowManagement.Models.Hod
+@Html.HiddenFor(model => model.ID)
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "bmd-label-floating" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "bmd-label-floating" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "bmd-label-floating" })
+            @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "error" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            @Html.DropDownListFor(model => model.DeptID, ViewBag.DepartmentList as SelectList, "Select Department", new { @class = "custom-select" })
+            @Html.ValidationMessageFor(model => model.DeptID, "", new { @class = "error" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "bmd-label-floating" })
+            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "error" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            @Html.LabelFor(model => model.Education, htmlAttributes: new { @class = "bmd-label-floating" })
+            @Html.EditorFor(model => model.Education, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Education, "", new { @class = "error" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
+            @Html.LabelFor(model => model.Experience, htmlAttributes: new { @class = "bmd-label-floating" })
+            @Html.EditorFor(model => model.Experience, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "error" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="">
+            <div class="custom-file">
+                @Html.TextBoxFor(model => model.Image, new { type = "file", @class = "custom-file-input", @accept = "image/*", @id = "customFile" })
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+@if (ViewBag.ShowPassField != null)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "bmd-label-floating" })
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                @Html.LabelFor(model => model.Re_Password, htmlAttributes: new { @class = "bmd-label-floating" })
+                @Html.PasswordFor(model => model.Re_Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Re_Password, "", new { @class = "error" })
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -12,16 +12,16 @@ namespace WorkFlowManagement.DAL
         private readonly SqlConnection Conn = new SqlConnection($"Data Source=localhost;Initial Catalog={AppInfo.DbName};Integrated Security=True");
 
 
-        public bool Login(string UserName, string password, string Table)
+        public bool Login(string Email, string Pass, string Table)
         {
             bool result = false;
             try
             {
-                string query = $"SELECT * FROM {Table} WHERE username = @username AND Password = @password";
+                string query = $"SELECT * FROM {Table} WHERE email = @email AND password = @password";
                 SqlCommand cmd = new SqlCommand(query, Conn);
 
-                cmd.Parameters.Add(new SqlParameter("username", UserName));
-                cmd.Parameters.Add(new SqlParameter("password", password));
+                cmd.Parameters.Add(new SqlParameter("email", Email));
+                cmd.Parameters.Add(new SqlParameter("password", Pass));
 
                 SqlDataAdapter adp = new SqlDataAdapter(cmd);
 

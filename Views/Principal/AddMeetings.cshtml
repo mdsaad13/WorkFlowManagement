@@ -1,0 +1,115 @@
+﻿@model WorkFlowManagement.Models.Meetings
+@{
+    ViewBag.Title = "Add Meeting";
+    ViewBag.MeetingsActive = "active";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<div class="row">
+    <div class="col-12">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <p class="card-category">Enter Details</p>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group bmd-form-group">
+                                    @Html.DropDownListFor(model => model.DeptID, ViewBag.DepartmentList as SelectList, "Select Department", new { @class = "custom-select" })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "error" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group bmd-form-group">
+                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "error" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group bmd-form-group">
+                                    @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Place, "", new { @class = "error" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "bmd-label-static" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows="3" } )
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group bmd-form-group">
+                                    @Html.LabelFor(model => model.DateOfMeeting, htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.EditorFor(model => model.DateOfMeeting, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DateOfMeeting, "", new { @class = "error" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group bmd-form-group">
+                                    @Html.LabelFor(model => model.TimeOfMeeting, htmlAttributes: new { @class = "bmd-label-floating" })
+                                    @Html.EditorFor(model => model.TimeOfMeeting, new { htmlAttributes = new { @class = "form-control timepicker" } })
+                                    @Html.ValidationMessageFor(model => model.TimeOfMeeting, "", new { @class = "error" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary pull-right">Add Meeting</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script>
+       // Date functions
+        $(function () {
+        var CurrentDate = new Date();
+        var PlusOneMonth = new Date();
+            PlusOneMonth.setDate(CurrentDate.getDate() + 30);
+
+        $('input[name="DateOfMeeting"]').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            minDate: CurrentDate,
+            maxDate: PlusOneMonth,
+            opens: 'right',
+            drops: 'up',
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+
+        $('#TimeOfMeeting').daterangepicker({
+            singleDatePicker: true,
+            timePicker: true,
+            timePicker24Hour: false,
+            timePickerIncrement: 1,
+            timePickerSeconds: false,
+            opens: 'right',
+            drops: 'up',
+            locale: {
+                format: 'hh:mm A'
+            }
+        }).on('show.daterangepicker', function (ev, picker) {
+            picker.container.find(".calendar-table").hide();
+        });
+    });
+    </script>
+}
+
+
+

@@ -1,0 +1,152 @@
+﻿@model IEnumerable<WorkFlowManagement.Models.Meetings>
+@{
+    ViewBag.Title = "Meetings";
+    ViewBag.MeetingsActive = "active";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h4 class="card-title ">@ViewBag.Title</h4>
+                    </div>
+                    <div class="col-6">
+                        <a href="@Url.Action("AddMeetings")" class="btn btn-info pull-right">Add Meeting</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="myTable">
+                        <thead class="text-primary">
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    Time
+                                </th>
+                                <th>
+                                    Meeting For
+                                </th>
+                                <th>
+                                    Added By
+                                </th>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Place
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int i = 1; }
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>
+                                        @item.DateOfMeeting.ToLongDateString()
+                                    </td>
+                                    <td>
+                                        @item.TimeOfMeeting
+                                    </td>
+                                    <td>
+                                        @item.DeptName
+                                    </td>
+                                    <td>
+                                        @item.AddedBy
+                                    </td>
+                                    <td>
+                                        @item.Title
+                                    </td>
+                                    <td>
+                                        @item.Description
+                                    </td>
+                                    <td>
+                                        @item.Place
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="DeleteMeeting(@item.ID)">
+                                            <i class="material-icons">delete</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+        function DeleteMeeting(id) {
+            if (confirm('Are you sure you want to delete this meeting?')) {
+                window.location.replace("/Principal/DeleteMeetings/"+id);
+            }
+        }
+
+    </script>
+    @{
+        int Notification = 0;
+        try
+        {
+            /*
+             * try block to check if Session["Notification"] exist
+             * if exist then convert  string to int
+             */
+            Notification = Convert.ToInt32(Session["Notification"]);
+        }
+        catch
+        { }
+
+        if (Notification == 1)
+        {
+            <script>
+                SuccessAlert('Meeting added successfully');
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 2)
+        {
+            <script>
+                ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+        if (Notification == 3)
+        {
+            <script>
+                SuccessAlert('Meeting deleted successfully');
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 4)
+        {
+            <script>
+                ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+    }
+}

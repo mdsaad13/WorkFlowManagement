@@ -1,3 +1,11 @@
 ﻿.error {
     color: #d50000;
 }
+
+.main-panel > .content {
+    min-height: calc(100vh - 158px);
+}
+
+.card [class*="card-header-"]:not(.card-header-icon):not(.card-header-text):not(.card-header-image) {
+    margin-bottom: 25px;
+}

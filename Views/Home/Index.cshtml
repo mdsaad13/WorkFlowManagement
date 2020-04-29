@@ -56,13 +56,17 @@
                 background-position: 100% 50%
             }
         }
+
+        .alert{
+            margin-bottom: 35px !important;
+        }
     </style>
 </head>
 
 <body class="intro-3">
     <div class="wrapper ">
         <div class="container">
-            <div class="row" style="align-items: center;height: 100vh;">
+            <div class="row" style="align-items: center;min-height: 100vh;">
 
                 <div class="col-lg-6 col-md-6 col-sm-8 ml-auto mr-auto">
                     <div class="card card-login">
@@ -104,18 +108,19 @@
                                         @if (ViewBag.PrincipalError != null)
                                         {
                                             <div class="alert alert-danger" role="alert">
-                                                Invalid username or password
+                                                Invalid Email or password
                                             </div>
                                         }
 
                                         <div class="form-group bmd-form-group">
-                                            <label for="exampleEmail" class="bmd-label-floating">UserName</label>
-                                            @Html.EditorFor(model => model.PrincipalCreds.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.UserName, "", new { @class = "error" })
+                                            <label for="exampleEmail" class="bmd-label-floating">Email</label>
+                                            @Html.EditorFor(model => model.PrincipalCreds.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PrincipalCreds.Email, "", new { @class = "error" })
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.PasswordFor(model => model.PrincipalCreds.Password, new { @class = "form-control form-control-user" })
+                                            @Html.EditorFor(model => model.PrincipalCreds.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                            @*@Html.PasswordFor(model => model.PrincipalCreds.Password, new { @class = "form-control form-control-user" })*@
                                             @Html.ValidationMessageFor(model => model.PrincipalCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">
@@ -131,17 +136,18 @@
                                         @if (ViewBag.HODError != null)
                                         {
                                             <div class="alert alert-danger" role="alert">
-                                                Invalid username or password
+                                                Invalid Email or password
                                             </div>
                                         }
                                         <div class="form-group bmd-form-group">
-                                            <label for="exampleEmail" class="bmd-label-floating">UserName</label>
-                                            @Html.EditorFor(model => model.HodCreds.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.HodCreds.UserName, "", new { @class = "error" })
+                                            <label for="exampleEmail" class="bmd-label-floating">Email</label>
+                                            @Html.EditorFor(model => model.HodCreds.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.HodCreds.Email, "", new { @class = "error" })
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.PasswordFor(model => model.HodCreds.Password, new { @class = "form-control form-control-user" })
+                                            @Html.EditorFor(model => model.HodCreds.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                            @*@Html.PasswordFor(model => model.HodCreds.Password, new { @class = "form-control form-control-user" })*@
                                             @Html.ValidationMessageFor(model => model.HodCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">
@@ -157,17 +163,18 @@
                                         @if (ViewBag.TeacherError != null)
                                         {
                                             <div class="alert alert-danger" role="alert">
-                                                Invalid username or password
+                                                Invalid Email or password
                                             </div>
                                         }
                                         <div class="form-group bmd-form-group">
-                                            <label for="exampleEmail" class="bmd-label-floating">UserName</label>
-                                            @Html.EditorFor(model => model.FacultyCreds.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.FacultyCreds.UserName, "", new { @class = "error" })
+                                            <label for="exampleEmail" class="bmd-label-floating">Email</label>
+                                            @Html.EditorFor(model => model.FacultyCreds.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.FacultyCreds.Email, "", new { @class = "error" })
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.PasswordFor(model => model.FacultyCreds.Password, new { @class = "form-control form-control-user" })
+                                            @Html.EditorFor(model => model.FacultyCreds.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                            @*@Html.PasswordFor(model => model.FacultyCreds.Password, new { @class = "form-control form-control-user" })*@
                                             @Html.ValidationMessageFor(model => model.FacultyCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">
@@ -186,7 +193,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/script")
-    @*<script src="/Scripts/material-dashboard.js"></script>*@
     @Scripts.Render("~/bundles/jqueryval")
 
 

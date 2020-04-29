@@ -42,7 +42,6 @@ namespace WorkFlowManagement.Models
         [StringLength(30, MinimumLength = 2, ErrorMessage = "Enter a valid qualification")]
         public string Experience { get; set; }
 
-        [Required(ErrorMessage = "Please select a file")]
         [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif|.jpeg)$", ErrorMessage = "Only Image files allowed.")]
         public HttpPostedFileBase Image { get; set; }
 
@@ -57,5 +56,7 @@ namespace WorkFlowManagement.Models
         [Display(Name = "Re-Enter Password")]
         [Compare("Password", ErrorMessage = "Entered Password did not match")]
         public string Re_Password { get; set; }
+
+        public string DeptName { get; set; }
     }
 }
