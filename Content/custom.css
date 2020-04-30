@@ -14,3 +14,7 @@
     color: #a7a8a9 !important;
     font-size: 16px !important;
 }
+
+.form-control[disabled], fieldset[disabled] .form-control, .form-group .form-control[disabled], fieldset[disabled] .form-group .form-control {
+    color: grey;
+}

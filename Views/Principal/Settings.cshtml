@@ -1,0 +1,153 @@
+﻿@model WorkFlowManagement.Models.Principal
+@{
+    ViewBag.Title = "Settings";
+}
+<div class="row">
+    <div class="col-md-10 m-auto">
+        <div class="card card-profile">
+            <div class="card-avatar">
+                <a href="#pablo">
+                    <img class="img" src="@Model.ImgUrl">
+                </a>
+            </div>
+            <div class="card-body">
+                <h6 class="card-category text-gray mb-4 text-center">@Model.Name</h6>
+                <h4 class="card-title text-center mb-3">Edit Profile</h4>
+                @using (Html.BeginForm("Settings", "Principal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group bmd-form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "bmd-label-floating" })
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "bmd-label-floating" })
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "error" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "bmd-label-floating" })
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-primary w-50">Update Profile</button>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 m-auto">
+        <div class="card">
+            <div class="card-header card-header-icon card-header-rose">
+                <div class="card-icon">
+                    <i class="material-icons">perm_identity</i>
+                </div>
+                <h4 class="card-title">
+                    Change Password
+                </h4>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("ChangePassword", "Principal", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">Current password</label>
+                                <input class="form-control" data-val="true" data-val-length="Enter a valid password" data-val-length-max="16" data-val-length-min="6" data-val-regex="Enter a valid password" data-val-regex-pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!#$%^&amp;_+-=]{6,16}$" data-val-required="Kindly enter your password" id="OldPassword" name="OldPassword" type="password">
+                                <span class="field-validation-valid error" data-valmsg-for="OldPassword" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">New password</label>
+                                <input class="form-control" data-val="true" data-val-length="Enter a valid password" data-val-length-max="16" data-val-length-min="6" data-val-regex="Enter a valid password" data-val-regex-pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!#$%^&amp;_+-=]{6,16}$" data-val-required="Kindly enter your password" id="NewPassword" name="NewPassword" type="password">
+                                <span class="field-validation-valid error" data-valmsg-for="NewPassword" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">Re-Enter New password</label>
+                                <input class="form-control" data-val="true" data-val-equalto="Entered Password did not match" data-val-equalto-other="*.NewPassword" id="ReNewPassword" name="ReNewPassword" type="password">
+                                <span class="field-validation-valid error" data-valmsg-for="ReNewPassword" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-primary w-50">Change Password</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @{
+        int Notification = 0;
+        try
+        {
+            /*
+             * try block to check if Session["Notification"] exist
+             * if exist then convert  string to int
+             */
+            Notification = Convert.ToInt32(Session["Notification"]);
+        }
+        catch
+        { }
+
+        if (Notification == 1)
+        {
+            <script>
+                SuccessAlert('Profile successfully updated!');
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 2)
+        {
+            <script>
+                ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 3)
+        {
+            <script>
+                SuccessAlert('Password successfully updated!');
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 4)
+        {
+            <script>
+                ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 5)
+        {
+            <script>
+                ErrorAlert("Password didn't match!<br>Kindly enter correct password");
+            </script>
+            Session["Notification"] = null;
+        }
+    }
+}

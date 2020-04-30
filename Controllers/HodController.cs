@@ -270,5 +270,105 @@ namespace WorkFlowManagement.Controllers
             return RedirectToAction("Leaves");
         }
         /* Leaves operations ends here */
+
+        public ActionResult QuestionPapers()
+        {
+            SetHodDetails();
+            Common common = new Common();
+            return View(common.QPapers(false, HodDetails.DeptID));
+        }
+        
+        public ActionResult UpdateQPapersStatus(int ID, int status)
+        {
+            Common common = new Common();
+            if (common.UpdateQPaperStatus(ID, status))
+            {
+                Session["Notification"] = 1;
+            }
+            else
+            {
+                Session["Notification"] = 2;
+            }
+            return RedirectToAction("QuestionPapers");
+        }
+
+        public ActionResult Settings()
+        {
+            SetHodDetails();
+            return View(HodDetails);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Settings(Hod hod)
+        {
+            SetHodDetails();
+            hod.ID = HodDetails.ID;
+            hod.DeptID = HodDetails.DeptID;
+            hod.Subject = HodDetails.Subject;
+
+            string ImgUrl;
+            try
+            {
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + hod.Image.FileName;
+                if (hod.Image != null)
+                {
+                    string path = Server.MapPath("/Images/HOD/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    hod.Image.SaveAs(path + uniqueFileName);
+                    ImgUrl = "/Images/HOD/" + uniqueFileName;
+                }
+                else
+                {
+                    ImgUrl = "noupdate";
+                }
+            }
+            catch
+            {
+                ImgUrl = "noupdate";
+            }
+
+            hod.ImgUrl = ImgUrl;
+
+            PrinciUtil princiUtil = new PrinciUtil();
+            if (princiUtil.UpdateHod(hod))
+            {
+                Session["Notification"] = 1;
+            }
+            else
+            {
+                Session["Notification"] = 2;
+            }
+            return RedirectToAction("Settings");
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(FormCollection formCollection)
+        {
+            string OldPassword = Convert.ToString(formCollection["OldPassword"]);
+            string NewPassword = Convert.ToString(formCollection["NewPassword"]);
+            SetHodDetails();
+            if (HodDetails.Password == OldPassword)
+            {
+                PrinciUtil princiUtil = new PrinciUtil();
+                if (princiUtil.UpdateHodPassword(NewPassword, HodDetails.ID))
+                {
+                    Session["Notification"] = 3;
+                }
+                else
+                {
+                    Session["Notification"] = 4;
+                }
+            }
+            else
+            {
+                Session["Notification"] = 5;
+            }
+
+            return RedirectToAction("Settings");
+        }
     }
 }

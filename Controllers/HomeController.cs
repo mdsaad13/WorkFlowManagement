@@ -15,25 +15,25 @@ namespace WorkFlowManagement.Controllers
         {
             ViewBag.PrincipalActive = "active";
 
-            LoginBundle loginBundle = new LoginBundle();
+            //LoginBundle loginBundle = new LoginBundle();
 
-            Principal PrincipalCreds = new Principal();
-            PrincipalCreds.Email = "admin@mail.com";
-            PrincipalCreds.Password = "Admin123";
-            loginBundle.PrincipalCreds = PrincipalCreds;
+            //Principal PrincipalCreds = new Principal();
+            //PrincipalCreds.Email = "admin@mail.com";
+            //PrincipalCreds.Password = "Admin123";
+            //loginBundle.PrincipalCreds = PrincipalCreds;
             
-            Hod hod = new Hod();
-            hod.Email = "hod@mail.com";
-            hod.Password = "Hod123";
-            loginBundle.HodCreds = hod;
+            //Hod hod = new Hod();
+            //hod.Email = "hod@mail.com";
+            //hod.Password = "Hod123";
+            //loginBundle.HodCreds = hod;
 
-            Faculty faculty = new Faculty();
-            faculty.Email = "saad.13.personal@gmail.com";
-            faculty.Password = "sAAD123";
-            loginBundle.FacultyCreds = faculty;
+            //Faculty faculty = new Faculty();
+            //faculty.Email = "saad.13.personal@gmail.com";
+            //faculty.Password = "sAAD123";
+            //loginBundle.FacultyCreds = faculty;
 
-            // This is login page
-            return View(loginBundle);
+            //return View(loginBundle);
+            return View();
         }
 
         [IsAuthorized]
@@ -89,6 +89,12 @@ namespace WorkFlowManagement.Controllers
             
         }
 
+        [IsAuthorized]
+        public ActionResult Login()
+        {
+            return RedirectToAction("Index");
+        }
+        
         public ActionResult Logout()
         {
             Session.Abandon();

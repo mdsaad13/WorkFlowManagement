@@ -78,9 +78,13 @@
                                         @Html.DisplayFor(modelItem => item.Subject)
                                     </td>
                                     <td>
-                                        <a class="btn btn-outline-primary btn-sm btn-round" href="@Url.Action("EditFaculty", new { id = item.ID })">
-                                            <i class="material-icons">create</i> Edit
+                                        <a class="btn btn-success btn-fab btn-fab-mini btn-round" href="@Url.Action("EditFaculty", new { id = item.ID })">
+                                            <i class="material-icons">create</i>
                                         </a>
+                                        &nbsp;
+                                        @*<button class="btn btn-danger btn-fab btn-fab-mini btn-round" onclick="DeleteThis(@item.ID)">
+                                            <i class="material-icons">delete</i>
+                                        </button>*@
                                     </td>
                                 </tr>
                                 i++;
@@ -98,6 +102,12 @@
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
+
+        function DeleteThis(id) {
+            if (confirm('Are you sure you want to delete faculty?')) {
+                window.location.replace("/Principal/DeleteFaculty/"+id);
+            }
+        }
     </script>
     @{
         int Notification = 0;
@@ -136,6 +146,13 @@
         {
             <script>
                 ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 5)
+        {
+            <script>
+                SuccessAlert('Faculty deleted successfully');
             </script>
             Session["Notification"] = null;
         }

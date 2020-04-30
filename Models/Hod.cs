@@ -15,10 +15,6 @@ namespace WorkFlowManagement.Models
         public string Name { get; set; }
 
         [Required]
-        [RegularExpression(@"^([a-zA-Z0-9]{5,30})$", ErrorMessage = "Username should be atleast of 5 characters and can only include a-z A-Z 0-9")]
-        public string UserName { get; set; }
-
-        [Required]
         [EmailAddress(ErrorMessage = "Enter valid email")]
         public string Email { get; set; }
 

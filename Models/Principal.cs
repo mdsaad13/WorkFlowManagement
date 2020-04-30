@@ -13,10 +13,6 @@ namespace WorkFlowManagement.Models
         public string Email { get; set; }
         public string Mobile { get; set; }
 
-        [Required]
-        [RegularExpression(@"^([a-zA-Z0-9]{5,30})$", ErrorMessage = "Username should be atleast of 5 characters and can only include a-z A-Z 0-9")]
-        public string UserName { get; set; }
-
         [Required(ErrorMessage = "Kindly enter your password")]
         [Display(Name = "Password")]
         [StringLength(16, MinimumLength = 6, ErrorMessage = "Enter a valid password")]

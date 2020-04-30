@@ -19,42 +19,9 @@
     @Styles.Render("~/css")
     <style>
         .intro-3 {
-            background: no-repeat #ff3f71;
-            background-image: -webkit-linear-gradient(120deg,#9128acc9,#7748fd9c,#ff46a5,#6caafd,#1fe487);
-            background-image: -o-linear-gradient(120deg,#9128acc9,#7748fd9c,#ff46a5,#6caafd,#1fe487);
-            background-image: linear-gradient(120deg,#9128acc9,#7748fd9c,#ff46a5,#6caafd,#1fe487);
-            -webkit-background-size: 800% 400%;
-            background-size: 800% 400%;
-            -webkit-animation-name: introAnimation;
-            animation-name: introAnimation;
-            -webkit-animation-duration: 35s;
-            animation-duration: 25s;
-            -webkit-animation-timing-function: linear;
-            animation-timing-function: linear;
-            -webkit-animation-delay: 0;
-            animation-delay: 0;
-            -webkit-animation-iteration-count: infinite;
-            animation-iteration-count: infinite
-        }
-
-        @@-webkit-keyframes introAnimation {
-            0%, 100% {
-                background-position: 0 50%
-            }
-
-            50% {
-                background-position: 100% 50%
-            }
-        }
-
-        @@keyframes introAnimation {
-            0%, 100% {
-                background-position: 0 50%
-            }
-
-            50% {
-                background-position: 100% 50%
-            }
+            background-size: cover;
+    background-attachment: fixed;
+    background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.69)), url(/Images/login_bg.jpg);
         }
 
         .alert{
@@ -119,8 +86,8 @@
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.EditorFor(model => model.PrincipalCreds.Password, new { htmlAttributes = new { @class = "form-control" } })
-                                            @*@Html.PasswordFor(model => model.PrincipalCreds.Password, new { @class = "form-control form-control-user" })*@
+                                            @*@Html.EditorFor(model => model.PrincipalCreds.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+                                            @Html.PasswordFor(model => model.PrincipalCreds.Password, new { @class = "form-control form-control-user" })
                                             @Html.ValidationMessageFor(model => model.PrincipalCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">
@@ -146,8 +113,8 @@
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.EditorFor(model => model.HodCreds.Password, new { htmlAttributes = new { @class = "form-control" } })
-                                            @*@Html.PasswordFor(model => model.HodCreds.Password, new { @class = "form-control form-control-user" })*@
+                                            @*@Html.EditorFor(model => model.HodCreds.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+                                            @Html.PasswordFor(model => model.HodCreds.Password, new { @class = "form-control form-control-user" })
                                             @Html.ValidationMessageFor(model => model.HodCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">
@@ -173,8 +140,8 @@
                                         </div>
                                         <div class="form-group bmd-form-group">
                                             <label for="exampleEmail" class="bmd-label-floating">Password</label>
-                                            @Html.EditorFor(model => model.FacultyCreds.Password, new { htmlAttributes = new { @class = "form-control" } })
-                                            @*@Html.PasswordFor(model => model.FacultyCreds.Password, new { @class = "form-control form-control-user" })*@
+                                            @*@Html.EditorFor(model => model.FacultyCreds.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+                                            @Html.PasswordFor(model => model.FacultyCreds.Password, new { @class = "form-control form-control-user" })
                                             @Html.ValidationMessageFor(model => model.FacultyCreds.Password, "", new { @class = "error" })
                                         </div>
                                         <div class="mt-4">

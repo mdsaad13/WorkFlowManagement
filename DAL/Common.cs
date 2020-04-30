@@ -308,6 +308,170 @@ namespace WorkFlowManagement.DAL
                 Conn.Close();
             }
         }
+
+        internal bool UpdateLeaveStatus(int LeaveID, int Status)
+        {
+            bool result = false;
+            try
+            {
+                string query = "UPDATE leaves SET status= @status WHERE leaveid = @leaveid";
+
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("status", Status));
+                cmd.Parameters.Add(new SqlParameter("leaveid", LeaveID));
+
+                Conn.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
         /* Leaves operations ends here */
+
+        internal List<QPaper> QPapers(bool View = true, int DeptID = 0, int FacultyID = 0)
+        {
+            DataTable td = new DataTable();
+            List<QPaper> list = new List<QPaper>();
+
+            try
+            {
+                string sqlquery = string.Empty;
+                if (View) // View All
+                {
+                    sqlquery = $"SELECT * FROM papers ORDER BY paperid DESC";
+                }
+                else // View Specific
+                {
+                    string FaculQuery = string.Empty;
+                    if (FacultyID > 0)
+                    {
+                        FaculQuery = "AND facultyid = " + FacultyID;
+                    }
+                    sqlquery = $"SELECT * FROM papers WHERE deptid = {DeptID} {FaculQuery} ORDER BY paperid DESC";
+                }
+
+                SqlCommand cmd = new SqlCommand(sqlquery, Conn);
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                Conn.Open();
+                adp.Fill(td);
+                Conn.Close();
+                PrinciUtil princiUtil = new PrinciUtil();
+                foreach (DataRow row in td.Rows)
+                {
+                    QPaper obj = new QPaper
+                    {
+                        ID = Convert.ToInt32(row["paperid"]),
+                        Title = Convert.ToString(row["title"]),
+                        Subject = Convert.ToString(row["subject"]),
+                        Description = Convert.ToString(row["description"]),
+                        Path = Convert.ToString(row["path"]),
+                        Status = Convert.ToInt32(row["status"]),
+                        FacultyID = Convert.ToInt32(row["facultyid"]),
+                        DateTime = Convert.ToDateTime(row["datetime"]),
+                        DeptID = Convert.ToInt32(row["deptid"])
+                    };
+                    obj.FacultyName = princiUtil.GetFacultyByID(obj.FacultyID).Name;
+                    obj.DeptName = princiUtil.GetDeptByID(obj.DeptID).Name;
+                    list.Add(obj);
+                }
+            }
+            catch (Exception)
+            { }
+            return list;
+        }
+
+        internal bool AddQPapers(QPaper model)
+        {
+            bool result = false;
+            try
+            {
+                string query = "INSERT INTO papers (title, subject, description, path, status, facultyid, datetime, deptid) VALUES(@title, @subject, @description, @path, @status, @facultyid, @datetime, @deptid)";
+                SqlCommand cmd = new SqlCommand(query, Conn);
+
+                cmd.Parameters.Add(new SqlParameter("title", model.Title));
+                cmd.Parameters.Add(new SqlParameter("subject", model.Subject));
+                cmd.Parameters.Add(new SqlParameter("description", model.Description));
+                cmd.Parameters.Add(new SqlParameter("path", model.Path));
+                cmd.Parameters.Add(new SqlParameter("status", model.Status));
+                cmd.Parameters.Add(new SqlParameter("facultyid", model.FacultyID));
+                cmd.Parameters.Add(new SqlParameter("datetime", model.DateTime));
+                cmd.Parameters.Add(new SqlParameter("deptid", model.DeptID));
+
+                Conn.Open();
+
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception exp)
+            {
+
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
+
+        internal void DeleteQPapers(int ID)
+        {
+            try
+            {
+                string query = "DELETE from papers where paperid = @paperid";
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("paperid", ID));
+                Conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            { }
+            finally
+            {
+                Conn.Close();
+            }
+        }
+
+        internal bool UpdateQPaperStatus(int PaperID, int Status)
+        {
+            bool result = false;
+            try
+            {
+                string query = "UPDATE papers SET status= @status WHERE paperid = @paperid";
+
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("status", Status));
+                cmd.Parameters.Add(new SqlParameter("paperid", PaperID));
+
+                Conn.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
     }
 }

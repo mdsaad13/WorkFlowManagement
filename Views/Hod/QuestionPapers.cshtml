@@ -13,7 +13,7 @@
                         <h4 class="card-title ">@ViewBag.Title</h4>
                     </div>
                     <div class="col-6">
-
+                        
                     </div>
                 </div>
             </div>
@@ -133,13 +133,13 @@
 
         function ApproveThis(id) {
             if (confirm('Are you sure you want to approve this Question Paper?')) {
-                window.location.replace("/Principal/UpdateQPapersStatus/"+id+"?status=1");
+                window.location.replace("/Hod/UpdateQPapersStatus/"+id+"?status=1");
             }
         }
 
         function DeclineThis(id) {
             if (confirm('Are you sure you want to decline this Question Paper?')) {
-                window.location.replace("/Principal/UpdateQPapersStatus/"+id+"?status=2");
+                window.location.replace("/Hod/UpdateQPapersStatus/"+id+"?status=2");
             }
         }
 

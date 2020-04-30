@@ -1,7 +1,175 @@
-﻿
+﻿@model IEnumerable<WorkFlowManagement.Models.Leaves>
 @{
     ViewBag.Title = "Leaves";
+    ViewBag.LeavesActive = "active";
 }
 
-<h2>Leaves</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h4 class="card-title ">@ViewBag.Title</h4>
+                    </div>
+                    <div class="col-6">
+                        <a href="@Url.Action("AskLeaves")" class="btn btn-info pull-right">Apply for leave</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="myTable">
+                        <thead class="text-primary">
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Asked By
+                                </th>
+                                <th>
+                                    From Date
+                                </th>
+                                <th>
+                                    To Date
+                                </th>
+                                <th>
+                                    Reason
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int i = 1; }
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <th scope="row">@i</th>
+                                <td>
+                                    @if (item.AskedBy == 1)
+                                    {
+                                        <span class="font-weight-bold">
+                                            HOD<br />
+                                            H-@item.HodID
+                                        </span>
+                                    }
+                                    else if (item.AskedBy == 2)
+                                    {
+                                        <span class="font-weight-bold">
+                                            Faculty<br />
+                                            F-@item.FacultyID
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @item.FromDate.ToLongDateString()
+                                </td>
+                                <td>
+                                    @item.ToDate.ToLongDateString()
+                                </td>
+                                <td>
+                                    @item.Reason
+                                </td>
+                                @if (item.Status == 0)
+                                {
+                                    <td class="text-warning">
+                                        Approval Pending!
+                                    </td>
+                                }
+                                else if (item.Status == 1)
+                                {
+                                    <td class="text-success">
+                                        Approved!
+                                    </td>
+                                }
+                                else if (item.Status == 2)
+                                {
+                                    <td class="text-danger">
+                                        Declined!
+                                    </td>
+                                }
+                                <td>
+                                    @if (item.Status == 0)
+                                    {
+                                        <div class="dropdown">
+                                            <a class="btn btn-primary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Update Status
+                                            </a>
 
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#" onclick="ApproveThis('@item.ID')">Approve</a>
+                                                <a class="dropdown-item" href="#" onclick="DeclineThis('@item.ID')">Decline</a>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No Action Required</span>
+                                    }
+                                </td>
+
+                            </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+        function ApproveThis(id) {
+            if (confirm('Are you sure you want to approve this leave?')) {
+                window.location.replace("/Principal/UpdateLeaveStatus/" + id + "?status=1");
+            }
+        }
+
+        function DeclineThis(id) {
+            if (confirm('Are you sure you want to decline this leave?')) {
+                window.location.replace("/Principal/UpdateLeaveStatus/" + id + "?status=2");
+            }
+        }
+
+    </script>
+    @{
+        int Notification = 0;
+        try
+        {
+            /*
+             * try block to check if Session["Notification"] exist
+             * if exist then convert  string to int
+             */
+            Notification = Convert.ToInt32(Session["Notification"]);
+        }
+        catch
+        { }
+
+        if (Notification == 1)
+        {
+            <script>
+                SuccessAlert('Leave status updated successfully!');
+            </script>
+            Session["Notification"] = null;
+        }
+        else if (Notification == 2)
+        {
+            <script>
+                ErrorAlert();
+            </script>
+            Session["Notification"] = null;
+        }
+    }
+}

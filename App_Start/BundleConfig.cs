@@ -26,7 +26,7 @@ namespace WorkFlowManagement
                       ));
 
             bundles.Add(new StyleBundle("~/css").Include(
-                      "~/Content/style.css",
+                      "~/Content/" + AppInfo.SoftwareTheme + ".css",
                       "~/Content/custom.css"));
         }
     }

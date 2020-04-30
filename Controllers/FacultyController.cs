@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using WorkFlowManagement.Models;
 
 namespace WorkFlowManagement.Controllers
 {
+    [FacultyAuthorize]
     public class FacultyController : Controller
     {
         private Faculty FacultyDetails;
@@ -119,5 +121,148 @@ namespace WorkFlowManagement.Controllers
             return RedirectToAction("Leaves");
         }
         /* Leaves operations ends here */
+
+        /* QuestionPapers operations starts here */
+        public ActionResult QuestionPapers()
+        {
+            SetFacultyDetails();
+            Common common = new Common();
+            return View(common.QPapers(false, FacultyDetails.DeptID, FacultyDetails.ID));
+        }
+        
+        public ActionResult AddQuestionPapers()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddQuestionPapers(QPaper qPaper)
+        {
+            SetFacultyDetails();
+            qPaper.Status = 0;
+            qPaper.FacultyID = FacultyDetails.ID;
+            qPaper.DeptID = FacultyDetails.DeptID;
+            qPaper.DateTime = DateTime.Now;
+            string ImgUrl = string.Empty;
+            try
+            {
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + qPaper.Image.FileName;
+                if (qPaper.Image != null)
+                {
+                    string path = Server.MapPath("/Images/QPapers/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    qPaper.Image.SaveAs(path + uniqueFileName);
+                    ImgUrl = "/Images/QPapers/" + uniqueFileName;
+                }
+            }
+            catch
+            { }
+
+            qPaper.Path = ImgUrl;
+
+            Common common = new Common();
+            if (common.AddQPapers(qPaper))
+            {
+                Session["Notification"] = 1;
+            }
+            else
+            {
+                Session["Notification"] = 2;
+            }
+            return RedirectToAction("QuestionPapers");
+        }
+
+        public ActionResult DeleteQuestionPapers(int ID)
+        {
+            Common common = new Common();
+            common.DeleteQPapers(ID);
+
+            Session["Notification"] = 3;
+
+            return RedirectToAction("QuestionPapers");
+        }
+        /* QuestionPapers operations ends here */
+
+        public ActionResult Settings()
+        {
+            SetFacultyDetails();
+            return View(FacultyDetails);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Settings(Faculty faculty)
+        {
+            SetFacultyDetails();
+            faculty.ID = FacultyDetails.ID;
+            faculty.DeptID = FacultyDetails.DeptID;
+            faculty.Subject = FacultyDetails.Subject;
+
+            string ImgUrl;
+            try
+            {
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + faculty.Image.FileName;
+                if (faculty.Image != null)
+                {
+                    string path = Server.MapPath("/Images/Faculty/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    faculty.Image.SaveAs(path + uniqueFileName);
+                    ImgUrl = "/Images/Faculty/" + uniqueFileName;
+                }
+                else
+                {
+                    ImgUrl = "noupdate";
+                }
+            }
+            catch
+            {
+                ImgUrl = "noupdate";
+            }
+            faculty.ImgUrl = ImgUrl;
+
+            PrinciUtil princiUtil = new PrinciUtil();
+            if (princiUtil.UpdateFaculty(faculty))
+            {
+                Session["Notification"] = 1;
+            }
+            else
+            {
+                Session["Notification"] = 2;
+            }
+            return RedirectToAction("Settings");
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(FormCollection formCollection)
+        {
+            string OldPassword = Convert.ToString(formCollection["OldPassword"]);
+            string NewPassword = Convert.ToString(formCollection["NewPassword"]);
+            SetFacultyDetails();
+            if (FacultyDetails.Password == OldPassword)
+            {
+                PrinciUtil princiUtil = new PrinciUtil();
+                if (princiUtil.UpdateFacultyPassword(NewPassword, FacultyDetails.ID))
+                {
+                    Session["Notification"] = 3;
+                }
+                else
+                {
+                    Session["Notification"] = 4;
+                }
+            }
+            else
+            {
+                Session["Notification"] = 5;
+            }
+
+            return RedirectToAction("Settings");
+        }
     }
 }

@@ -141,11 +141,16 @@
     <Compile Include="Models\Meetings.cs" />
     <Compile Include="Models\NoticeBoard.cs" />
     <Compile Include="Models\Principal.cs" />
+    <Compile Include="Models\QPaper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\blue.css" />
     <Content Include="Content\custom.css" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\green.css" />
+    <Content Include="Content\orange.css" />
+    <Content Include="Content\purple.css" />
+    <Content Include="Content\red.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -232,6 +237,12 @@
     <Content Include="Views\Faculty\Meetings.cshtml" />
     <Content Include="Views\Faculty\Leaves.cshtml" />
     <Content Include="Views\Faculty\AskLeaves.cshtml" />
+    <Content Include="Views\Faculty\QuestionPapers.cshtml" />
+    <Content Include="Views\Faculty\AddQuestionPapers.cshtml" />
+    <Content Include="Views\Faculty\Settings.cshtml" />
+    <Content Include="Views\Hod\Settings.cshtml" />
+    <Content Include="Views\Hod\QuestionPapers.cshtml" />
+    <Content Include="Views\Principal\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

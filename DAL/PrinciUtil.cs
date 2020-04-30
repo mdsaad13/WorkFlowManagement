@@ -12,6 +12,100 @@ namespace WorkFlowManagement.DAL
     {
         private readonly SqlConnection Conn = new SqlConnection($"Data Source=localhost;Initial Catalog={AppInfo.DbName};Integrated Security=True");
 
+        internal Principal GetPrincipalID(int id)
+        {
+            DataTable td = new DataTable();
+            Principal obj = new Principal();
+            try
+            {
+                string sqlquery = "SELECT * FROM principal where id = @id";
+                SqlCommand cmd = new SqlCommand(sqlquery, Conn);
+                cmd.Parameters.Add(new SqlParameter("id", id));
+
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+
+                Conn.Open();
+
+                adp.Fill(td);
+
+                Conn.Close();
+
+                obj.ID = Convert.ToInt32(td.Rows[0]["id"]);
+                obj.Name = Convert.ToString(td.Rows[0]["name"]);
+                obj.Email = Convert.ToString(td.Rows[0]["email"]);
+                obj.Mobile = Convert.ToString(td.Rows[0]["mobile"]);
+                obj.Password = Convert.ToString(td.Rows[0]["password"]);
+            }
+            catch (Exception)
+            { }
+            return obj;
+
+        }
+
+        internal bool UpdatePrincipal(Principal model)
+        {
+            bool result = false;
+            try
+            {
+                string query = "UPDATE principal SET name = @name, email = @email, mobile = @mobile WHERE id = @id";
+                
+
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("name", model.Name));
+                cmd.Parameters.Add(new SqlParameter("email", model.Email));
+                cmd.Parameters.Add(new SqlParameter("mobile", model.Mobile));
+
+                cmd.Parameters.Add(new SqlParameter("id", model.ID));
+
+                Conn.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
+
+        internal bool UpdatePrincipalPassword(string Password, int ID)
+        {
+            bool result = false;
+            try
+            {
+                string query = "UPDATE principal SET password = @password WHERE id = @id";
+
+
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("password", Password));
+
+                cmd.Parameters.Add(new SqlParameter("id", ID));
+
+                Conn.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
+
         /* Departments operations starts here */
         internal bool AddDept(Departments model)
         {
@@ -234,6 +328,7 @@ namespace WorkFlowManagement.DAL
                 obj.Education = Convert.ToString(td.Rows[0]["education"]);
                 obj.Experience = Convert.ToString(td.Rows[0]["experience"]);
                 obj.ImgUrl = Convert.ToString(td.Rows[0]["imgurl"]);
+                obj.Password = Convert.ToString(td.Rows[0]["password"]);
                 obj.DeptName = GetDeptByID(Convert.ToInt32(td.Rows[0]["deptid"])).Name;
 
             }
@@ -270,6 +365,37 @@ namespace WorkFlowManagement.DAL
                 cmd.Parameters.Add(new SqlParameter("imgurl", model.ImgUrl));
 
                 cmd.Parameters.Add(new SqlParameter("id", model.ID));
+
+                Conn.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
+        
+        internal bool UpdateHodPassword(string Password, int ID)
+        {
+            bool result = false;
+            try
+            {
+                string query = "UPDATE hod SET password = @password WHERE hodid = @id";
+                
+
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("password", Password));
+
+                cmd.Parameters.Add(new SqlParameter("id", ID));
 
                 Conn.Open();
                 int rows = cmd.ExecuteNonQuery();
@@ -414,6 +540,7 @@ namespace WorkFlowManagement.DAL
                 obj.Education = Convert.ToString(td.Rows[0]["education"]);
                 obj.Experience = Convert.ToString(td.Rows[0]["experience"]);
                 obj.ImgUrl = Convert.ToString(td.Rows[0]["imgurl"]);
+                obj.Password = Convert.ToString(td.Rows[0]["password"]);
                 obj.DeptName = GetDeptByID(Convert.ToInt32(td.Rows[0]["deptid"])).Name;
 
             }
@@ -450,6 +577,37 @@ namespace WorkFlowManagement.DAL
                 cmd.Parameters.Add(new SqlParameter("imgurl", model.ImgUrl));
 
                 cmd.Parameters.Add(new SqlParameter("id", model.ID));
+
+                Conn.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return result;
+        }
+
+        internal bool UpdateFacultyPassword(string Password, int ID)
+        {
+            bool result = false;
+            try
+            {
+                string query = "UPDATE faculty SET password = @password WHERE facultyid = @id";
+
+
+                SqlCommand cmd = new SqlCommand(query, Conn);
+                cmd.Parameters.Add(new SqlParameter("password", Password));
+
+                cmd.Parameters.Add(new SqlParameter("id", ID));
 
                 Conn.Open();
                 int rows = cmd.ExecuteNonQuery();

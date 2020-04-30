@@ -355,12 +355,43 @@ namespace WorkFlowManagement.Controllers
 
         public ActionResult Leaves()
         {
-            return View();
+            Common common = new Common();
+
+            return View(common.Leaves(3));
+        }
+
+        public ActionResult UpdateLeaveStatus(int ID, int status)
+        {
+            Common common = new Common();
+            if (common.UpdateLeaveStatus(ID, status))
+            {
+                Session["Notification"] = 1;
+            }
+            else
+            {
+                Session["Notification"] = 2;
+            }
+            return RedirectToAction("Leaves");
         }
 
         public ActionResult QuestionPapers()
         {
-            return View();
+            Common common = new Common();
+            return View(common.QPapers(true));
+        }
+
+        public ActionResult UpdateQPapersStatus(int ID, int status)
+        {
+            Common common = new Common();
+            if (common.UpdateQPaperStatus(ID, status))
+            {
+                Session["Notification"] = 1;
+            }
+            else
+            {
+                Session["Notification"] = 2;
+            }
+            return RedirectToAction("QuestionPapers");
         }
 
         public ActionResult NoticeBoards()
@@ -401,5 +432,59 @@ namespace WorkFlowManagement.Controllers
             return RedirectToAction("NoticeBoards");
         }
 
+        public ActionResult Settings()
+        {
+            PrinciUtil princiUtil = new PrinciUtil();
+            return View(
+                princiUtil.GetPrincipalID(Convert.ToInt32(Session["PrincipalID"]))
+                );
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Settings(Principal principal)
+        {
+
+            PrinciUtil princiUtil = new PrinciUtil();
+            if (princiUtil.UpdatePrincipal(principal))
+            {
+                Session["Notification"] = 1;
+            }
+            else
+            {
+                Session["Notification"] = 2;
+            }
+            return RedirectToAction("Settings");
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(FormCollection formCollection)
+        {
+            PrinciUtil princiUtil = new PrinciUtil();
+
+            Principal principal = princiUtil.GetPrincipalID(Convert.ToInt32(Session["PrincipalID"]));
+
+            string OldPassword = Convert.ToString(formCollection["OldPassword"]);
+            string NewPassword = Convert.ToString(formCollection["NewPassword"]);
+
+            if (principal.Password == OldPassword)
+            {
+                
+                if (princiUtil.UpdatePrincipalPassword(NewPassword, principal.ID))
+                {
+                    Session["Notification"] = 3;
+                }
+                else
+                {
+                    Session["Notification"] = 4;
+                }
+            }
+            else
+            {
+                Session["Notification"] = 5;
+            }
+
+            return RedirectToAction("Settings");
+        }
     }
 }

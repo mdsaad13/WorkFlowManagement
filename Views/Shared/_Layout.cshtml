@@ -25,7 +25,7 @@
                 <a class="simple-text logo-normal">
                     @AppInfo.SoftwareName <br />
                     <span class="which-dashboard">@ViewBag.WhichDashboard</span>
-                </a>                
+                </a>
             </div>
             <div class="sidebar-wrapper">
                 @{
@@ -88,30 +88,38 @@
         function SuccessAlert(message) {
             $.notify({
                 icon: "check_circle",
-                message: message
+                message: message,
+                showProgressbar: true
             }, {
                 type: 'success',
                 timer: 3000,
                 placement: {
-                    from: 'top',
-                    align: 'center'
+                    from: '@AppInfo.NotificationPlacement_From',
+                    align: '@AppInfo.NotificationPlacement_Align'
                 }
             });
         }
 
-        function ErrorAlert(message = 'An Unknown Error Occured.<br>Please try again later') {
+        function ErrorAlert(message = '@Html.Raw(AppInfo.NotificationDefaultErrorMessage)') {
             $.notify({
                 icon: "error",
-                message: message
+                message: message,
             }, {
                 type: 'danger',
                 allow_dismiss: false,
                 placement: {
-                    from: 'top',
-                    align: 'center'
+                    from: '@AppInfo.NotificationPlacement_From',
+                    align: '@AppInfo.NotificationPlacement_Align'
                 }
             });
         }
+
+        $('#customFile').on('change', function () {
+            //get the file name
+            var fileName = $(this).val();
+            //replace the "Choose a file" label
+            $(this).next('.custom-file-label').html(fileName);
+        });
     </script>
 
     @* Custom JS *@
